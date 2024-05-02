@@ -149,4 +149,4 @@ def get_upcoming_matches():
     return jsonify(upcoming_matches)
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0')
+    app.run()
