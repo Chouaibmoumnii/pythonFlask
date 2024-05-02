@@ -16,7 +16,7 @@ results_collection = db['results']
 matches_collection = db['matches']
 
 def collect_match_results():
-    # Initialize dictionaries for historical and upcomingss matches
+    # Initialize dictionaries for historical and upcomings matchess
     historical_matches = {}
     upcoming_matches = {}
 
