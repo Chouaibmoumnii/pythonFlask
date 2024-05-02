@@ -5,23 +5,27 @@ import statistics
 from bson import ObjectId
 from flask_cors import CORS
 
-
 app = Flask(__name__)
 CORS(app)
-# MongoDB client setup
-client = MongoClient('mongodb+srv://admin:lutadmin@lutcluster.hudxy73.mongodb.net/?retryWrites=true&w=majority')
-db = client.get_database('test')
-teams_collection = db['teams']
-results_collection = db['results']
-matches_collection = db['matches']
+
+def get_db_connection():
+    # Create a new MongoClient instance per request or function call
+    client = MongoClient('mongodb+srv://admin:lutadmin@lutcluster.hudxy73.mongodb.net/?retryWrites=true&w=majority')
+    return client.get_database('test')
 
 def collect_match_results():
-    # Initialize dictionaries for historical and upcomings matchess
+    # Initialize dictionaries for historical and upcoming matches
     historical_matches = {}
     upcoming_matches = {}
 
     # Get today's date
     today_date = datetime.datetime.utcnow()
+
+    # Use a new MongoDB connection for each request
+    db = get_db_connection()
+    teams_collection = db['teams']
+    results_collection = db['results']
+    matches_collection = db['matches']
 
     # Retrieve all match results
     all_matches = results_collection.find()
